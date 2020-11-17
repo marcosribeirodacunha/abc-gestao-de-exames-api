@@ -1,7 +1,9 @@
 import {
+  BeforeRemove,
   Column,
   CreateDateColumn,
   Entity,
+  getRepository,
   JoinColumn,
   ManyToOne,
   OneToOne,
@@ -41,7 +43,7 @@ class User {
   @Column({ name: 'photo_id', type: 'uuid' })
   photoId: string;
 
-  @OneToOne(type => Photo, { cascade: ['insert', 'update', 'remove'] })
+  @OneToOne(type => Photo, { cascade: true })
   @JoinColumn({ name: 'photo_id' })
   photo: Photo;
 
@@ -57,6 +59,14 @@ class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
+
+  @BeforeRemove()
+  deletePhoto() {
+    const photoRepository = getRepository(Photo);
+    photoRepository.findOne(this.photoId).then(photo => {
+      if (photo) photoRepository.remove(photo);
+    });
+  }
 }
 
 export default User;

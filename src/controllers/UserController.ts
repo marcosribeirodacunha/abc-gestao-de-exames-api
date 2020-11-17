@@ -8,7 +8,12 @@ import User from '@models/User';
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
     const userRepository = getRepository(User);
-    const users = await userRepository.find();
+    const users = await userRepository.find({
+      order: { updatedAt: 'DESC', name: 'ASC' },
+      relations: ['photo', 'job'],
+    });
+
+    users.forEach(user => delete user.password);
 
     return res.status(200).json(users);
   }
@@ -17,10 +22,13 @@ class UserController {
     const { id } = req.params;
 
     const userRepository = getRepository(User);
-    const user = await userRepository.findOne(id);
+    const user = await userRepository.findOne(id, {
+      relations: ['photo', 'job'],
+    });
 
     if (!user) throw new AppError('Usuário não encontrado', 404);
 
+    delete user.password;
     return res.status(200).json(user);
   }
 
@@ -35,6 +43,8 @@ class UserController {
       isAdmin,
       jobId,
     } = req.body;
+
+    const { key, location: url = '' } = req.file;
 
     const userRepository = getRepository(User);
     const userExists = await userRepository.findOne({
@@ -53,17 +63,18 @@ class UserController {
       phone,
       registrationNumber,
       password,
-      isAdmin,
+      isAdmin: isAdmin === 'true',
       jobId,
       photo: {
-        key: 'key',
-        url: 'url',
+        key,
+        url,
       },
     };
 
     const user = userRepository.create(data);
     await userRepository.save(user);
 
+    delete user.password;
     return res.status(201).json(user);
   }
 
@@ -80,9 +91,14 @@ class UserController {
       jobId,
     } = req.body;
 
+    const photo = {
+      key: req.file?.key,
+      url: req.file?.location,
+    };
+
     const userRepository = getRepository(User);
 
-    const user = await userRepository.findOne(id);
+    const user = await userRepository.findOne(id, { relations: ['photo'] });
     if (!user) throw new AppError('Usuário não encontrado', 404);
 
     if (email || registrationNumber) {
@@ -106,16 +122,17 @@ class UserController {
       phone,
       registrationNumber,
       password,
-      isAdmin,
+      isAdmin: isAdmin === 'true',
       jobId,
+      photo,
     };
 
-    const updatedUser = mergeWith(user, data, (oldValue, newValue) => {
+    const newUser = mergeWith(user, data, (oldValue, newValue) => {
       if (isBoolean(oldValue && newValue)) return newValue;
     });
 
-    await userRepository.save(updatedUser);
-
+    const updatedUser = await userRepository.save(newUser);
+    delete updatedUser.password;
     return res.status(200).json(updatedUser);
   }
 
@@ -127,7 +144,7 @@ class UserController {
 
     if (!user) throw new AppError('Usuário não encontrado', 404);
 
-    await userRepository.delete(id);
+    await userRepository.remove(user);
 
     return res.status(204).send();
   }
