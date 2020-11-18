@@ -3,7 +3,6 @@ import 'express-async-errors';
 import 'dotenv/config';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import 'reflect-metadata';
 
 import './database';
 import uploadConfig from '@config/upload';

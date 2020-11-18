@@ -1,5 +1,3 @@
-import fs from 'fs';
-import path from 'path';
 import {
   BeforeInsert,
   BeforeRemove,
@@ -11,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import uploadConfig from '@config/upload';
+import deletePhoto from '../helpers/deletePhoto';
 
 @Entity('photos')
 class Photo {
@@ -39,7 +37,7 @@ class Photo {
 
   @BeforeRemove()
   deleteFile() {
-    return fs.promises.unlink(path.resolve(uploadConfig.directory, this.key));
+    return deletePhoto(this.key);
   }
 }
 

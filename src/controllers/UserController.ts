@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { isBoolean, mergeWith } from 'lodash';
 import AppError from 'src/errors/AppError';
+import deletePhoto from 'src/helpers/deletePhoto';
 import { getRepository } from 'typeorm';
 
 import User from '@models/User';
@@ -133,11 +134,15 @@ class UserController {
       photo,
     };
 
-    const newUser = mergeWith(user, data, (oldValue, newValue) => {
+    const oldPhotoKey = user.photo.key;
+
+    mergeWith(user, data, (oldValue, newValue) => {
       if (isBoolean(oldValue && newValue)) return newValue;
     });
 
-    const updatedUser = await userRepository.save(newUser);
+    const updatedUser = await userRepository.save(user);
+    if (data.photo.key) await deletePhoto(oldPhotoKey);
+
     delete updatedUser.password;
     return res.status(200).json(updatedUser);
   }
