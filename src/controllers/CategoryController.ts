@@ -19,7 +19,7 @@ class CategoryController {
     const category = await repository.findOne(id);
 
     if (!category)
-      throw new AppError('Categoria não encontrada ou não cadastrada');
+      throw new AppError('Categoria não encontrada ou não cadastrada', 404);
 
     return res.status(200).json(category);
   }
@@ -42,7 +42,7 @@ class CategoryController {
     const category = await repository.findOne(id);
 
     if (!category)
-      throw new AppError('Categoria não encontrada ou não cadastrada');
+      throw new AppError('Categoria não encontrada ou não cadastrada', 404);
 
     category.name = name;
     await repository.save(category);
@@ -57,7 +57,7 @@ class CategoryController {
     const category = await repository.findOne(id);
 
     if (!category)
-      throw new AppError('Categoria não encontrada ou não cadastrada');
+      throw new AppError('Categoria não encontrada ou não cadastrada', 404);
 
     await repository.remove(category);
 

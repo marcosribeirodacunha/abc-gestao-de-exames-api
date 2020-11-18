@@ -20,7 +20,7 @@ class ExamTypeController {
     const examType = await repository.findOne(id);
 
     if (!examType)
-      throw new AppError('Tipo de exame não encontrado ou não cadastrado');
+      throw new AppError('Tipo de exame não encontrado ou não cadastrado', 404);
 
     return res.status(200).json(examType);
   }
@@ -43,7 +43,7 @@ class ExamTypeController {
     const examType = await repository.findOne(id);
 
     if (!examType)
-      throw new AppError('Tipo de exame não encontrado ou não cadastrado');
+      throw new AppError('Tipo de exame não encontrado ou não cadastrado', 404);
 
     merge(examType, { name, expiration });
     await repository.save(examType);
@@ -58,7 +58,7 @@ class ExamTypeController {
     const examType = await repository.findOne(id);
 
     if (!examType)
-      throw new AppError('Tipo de exame não encontrado ou não cadastrado');
+      throw new AppError('Tipo de exame não encontrado ou não cadastrado', 404);
 
     await repository.remove(examType);
 
