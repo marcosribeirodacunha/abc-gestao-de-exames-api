@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import { MulterError } from 'multer';
 import AppError from 'src/errors/AppError';
 
 function handleErrors(
@@ -9,6 +10,11 @@ function handleErrors(
 ): Response {
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({ message: error.message });
+  }
+
+  if (error instanceof MulterError) {
+    console.log('\nmulter error >>', error, '\n');
+    return res.status(400).json({ message: error.message });
   }
 
   console.log('\nerror >>', error.message, '\n');

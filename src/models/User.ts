@@ -1,5 +1,8 @@
+import { hashSync } from 'bcryptjs';
 import {
+  BeforeInsert,
   BeforeRemove,
+  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -59,6 +62,14 @@ class User {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: string;
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  hashPassword() {
+    if (this.password) {
+      this.password = hashSync(this.password, 8);
+    }
+  }
 
   @BeforeRemove()
   deletePhoto() {

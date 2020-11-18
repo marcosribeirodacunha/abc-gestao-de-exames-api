@@ -56,6 +56,9 @@ class UserController {
     if (userExists?.registrationNumber === registrationNumber)
       throw new AppError('Matricula já cadastrada');
 
+    if (isAdmin === 'true' && !password)
+      throw new AppError('Administradores devem possuir uma senha');
+
     const data = {
       name,
       cpf,
@@ -114,6 +117,9 @@ class UserController {
           throw new AppError('Matricula já cadastrada');
       }
     }
+
+    if (!user.password && isAdmin === 'true' && !password)
+      throw new AppError('Administradores devem possuir uma senha');
 
     const data = {
       name,
