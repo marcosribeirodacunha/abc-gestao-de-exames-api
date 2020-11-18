@@ -1,13 +1,13 @@
 import express from 'express';
 
-import JobController from '@controllers/JobController';
+import jobController from '@controllers/JobController';
 
 const router = express.Router();
 
-router.get('/', JobController.index);
-router.get('/:id', JobController.show);
-router.post('/', JobController.store);
-router.patch('/:id', JobController.update);
-router.delete('/:id', JobController.delete);
+router.get('/', jobController.index);
+router.get('/:id', jobController.show);
+router.post('/', jobController.store);
+router.patch('/:id', jobController.update);
+router.delete('/:id', jobController.delete);
 
 export default router;
