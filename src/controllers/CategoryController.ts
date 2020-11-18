@@ -4,12 +4,14 @@ import { getRepository } from 'typeorm';
 
 import Category from '@models/Category';
 
+import categoryView from '@views/categoryView';
+
 class CategoryController {
   public async index(req: Request, res: Response): Promise<Response> {
     const repository = getRepository(Category);
-    const categories = await repository.find();
+    const categories = await repository.find({ order: { name: 'ASC' } });
 
-    return res.status(200).json(categories);
+    return res.status(200).json(categoryView.renderMany(categories));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -21,7 +23,7 @@ class CategoryController {
     if (!category)
       throw new AppError('Categoria não encontrada ou não cadastrada', 404);
 
-    return res.status(200).json(category);
+    return res.status(200).json(categoryView.render(category));
   }
 
   public async store(req: Request, res: Response): Promise<Response> {

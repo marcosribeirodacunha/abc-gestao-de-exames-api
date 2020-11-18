@@ -4,12 +4,14 @@ import { getRepository } from 'typeorm';
 
 import Job from '@models/Job';
 
+import jobView from '@views/jobView';
+
 class JobController {
   public async index(req: Request, res: Response): Promise<Response> {
     const jobRepository = getRepository(Job);
-    const jobs = await jobRepository.find();
+    const jobs = await jobRepository.find({ order: { name: 'ASC' } });
 
-    return res.status(200).json(jobs);
+    return res.status(200).json(jobView.renderMany(jobs));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -20,7 +22,7 @@ class JobController {
 
     if (!job) throw new AppError('Função não encontrada', 404);
 
-    return res.status(200).json(job);
+    return res.status(200).json(jobView.render(job));
   }
 
   public async store(req: Request, res: Response): Promise<Response> {

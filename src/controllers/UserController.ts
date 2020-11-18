@@ -6,17 +6,19 @@ import { getRepository } from 'typeorm';
 
 import User from '@models/User';
 
+import userView from '@views/userView';
+
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
     const userRepository = getRepository(User);
     const users = await userRepository.find({
-      order: { updatedAt: 'DESC', name: 'ASC' },
+      order: { name: 'ASC', updatedAt: 'DESC' },
       relations: ['photo', 'job'],
     });
 
     users.forEach(user => delete user.password);
 
-    return res.status(200).json(users);
+    return res.status(200).json(userView.renderMany(users));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -30,7 +32,7 @@ class UserController {
     if (!user) throw new AppError('Usuário não encontrado', 404);
 
     delete user.password;
-    return res.status(200).json(user);
+    return res.status(200).json(userView.render(user));
   }
 
   public async store(req: Request, res: Response): Promise<Response> {

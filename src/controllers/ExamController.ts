@@ -5,26 +5,42 @@ import { getRepository } from 'typeorm';
 
 import Exam from '@models/Exam';
 
+import examView from '@views/examView';
+
 class ExamController {
   public async index(req: Request, res: Response): Promise<Response> {
     const repository = getRepository(Exam);
     const exams = await repository.find({
-      relations: ['employee', 'type', 'category'],
+      relations: [
+        'employee',
+        'employee.photo',
+        'employee.job',
+        'type',
+        'category',
+      ],
       order: { updatedAt: 'ASC' },
     });
 
-    return res.status(200).json(exams);
+    return res.status(200).json(examView.renderMany(exams));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
     const repository = getRepository(Exam);
-    const exam = await repository.findOne(id);
+    const exam = await repository.findOne(id, {
+      relations: [
+        'employee',
+        'employee.photo',
+        'employee.job',
+        'type',
+        'category',
+      ],
+    });
 
     if (!exam) throw new AppError('Exame não encontrado', 404);
 
-    return res.status(200).json(exam);
+    return res.status(200).json(examView.render(exam));
   }
 
   public async store(req: Request, res: Response): Promise<Response> {

@@ -5,12 +5,14 @@ import { getRepository } from 'typeorm';
 
 import ExamType from '@models/ExamType';
 
+import examTypeView from '@views/examTypeView';
+
 class ExamTypeController {
   public async index(req: Request, res: Response): Promise<Response> {
     const repository = getRepository(ExamType);
-    const examTypes = await repository.find();
+    const examTypes = await repository.find({ order: { name: 'ASC' } });
 
-    return res.status(200).json(examTypes);
+    return res.status(200).json(examTypeView.renderMany(examTypes));
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
@@ -22,7 +24,7 @@ class ExamTypeController {
     if (!examType)
       throw new AppError('Tipo de exame não encontrado ou não cadastrado', 404);
 
-    return res.status(200).json(examType);
+    return res.status(200).json(examTypeView.render(examType));
   }
 
   public async store(req: Request, res: Response): Promise<Response> {
