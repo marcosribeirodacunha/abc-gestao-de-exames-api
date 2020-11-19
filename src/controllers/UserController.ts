@@ -10,11 +10,22 @@ import userView from '@views/userView';
 
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {
+    const { name = '', regist_number = '', job_id = '' } = req.query;
+
     const userRepository = getRepository(User);
-    const users = await userRepository.find({
-      order: { name: 'ASC', updatedAt: 'DESC' },
-      relations: ['photo', 'job'],
-    });
+    const query = userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.photo', 'photo')
+      .leftJoinAndSelect('user.job', 'job')
+      .where('user.name ILIKE :name', { name: `%${name}%` })
+      .andWhere('user.registration_number ILIKE :regist_number', {
+        regist_number: `%${regist_number}%`,
+      })
+      .orderBy('user.name')
+      .addOrderBy('user.updated_at');
+
+    if (job_id) query.andWhere('job.id = :job_id', { job_id });
+    const users = await query.getMany();
 
     users.forEach(user => delete user.password);
 
