@@ -1,6 +1,7 @@
-import express from 'express';
-import 'express-async-errors';
 import 'dotenv/config';
+import 'express-async-errors';
+import cors from 'cors';
+import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
@@ -12,6 +13,7 @@ import router from './routes';
 
 const app = express();
 
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
