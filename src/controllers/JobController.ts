@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getRepository } from 'typeorm';
+import { getRepository, Not } from 'typeorm';
 
 import Job from '@models/Job';
 
@@ -10,7 +10,10 @@ import AppError from '../errors/AppError';
 class JobController {
   public async index(req: Request, res: Response): Promise<Response> {
     const jobRepository = getRepository(Job);
-    const jobs = await jobRepository.find({ order: { name: 'ASC' } });
+    const jobs = await jobRepository.find({
+      order: { name: 'ASC' },
+      where: { name: Not('Admin') },
+    });
 
     return res.status(200).json(jobView.renderMany(jobs));
   }
@@ -32,7 +35,7 @@ class JobController {
     if (!name) throw new AppError('O nome da função é obrigatório');
 
     const jobRepository = getRepository(Job);
-    const job = jobRepository.create({ name: req.body.name });
+    const job = jobRepository.create({ name });
     await jobRepository.save(job);
 
     return res.status(201).json(job);

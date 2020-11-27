@@ -28,7 +28,9 @@ class ExamController {
       .leftJoinAndSelect('employee.photo', 'photo')
       .leftJoinAndSelect('exam.type', 'type')
       .leftJoinAndSelect('exam.category', 'category')
-      .where('employee.name ILIKE :employee', { employee: `%${employee}%` })
+      .where('employee.id != :id', { id: req.user.id })
+      .andWhere('employee.email != :email', { email: 'admin@email.com' })
+      .andWhere('employee.name ILIKE :employee', { employee: `%${employee}%` })
       .andWhere('employee.registration_number ILIKE :regist_number', {
         regist_number: `%${regist_number}%`,
       })

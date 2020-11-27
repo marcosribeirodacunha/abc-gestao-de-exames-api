@@ -18,7 +18,9 @@ class UserController {
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.photo', 'photo')
       .leftJoinAndSelect('user.job', 'job')
-      .where('user.name ILIKE :name', { name: `%${name}%` })
+      .where('user.id != :id', { id: req.user.id })
+      .andWhere('user.email != :email', { email: 'admin@email.com' })
+      .andWhere('user.name ILIKE :name', { name: `%${name}%` })
       .andWhere('user.registration_number ILIKE :regist_number', {
         regist_number: `%${regist_number}%`,
       })
