@@ -142,10 +142,15 @@ class UserController {
       phone,
       registrationNumber,
       password,
-      isAdmin: isAdmin === 'true',
+      isAdmin: user.isAdmin,
       jobId,
       photo,
     };
+
+    if (isBoolean(isAdmin)) data.isAdmin = isAdmin;
+
+    if (isAdmin === 'false' || isAdmin === 'true')
+      data.isAdmin = isAdmin === 'true';
 
     const oldPhotoKey = user.photo.key;
 
