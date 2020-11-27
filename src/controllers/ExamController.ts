@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { merge } from 'lodash';
-import AppError from 'src/errors/AppError';
 import { getRepository } from 'typeorm';
 
 import Exam from '@models/Exam';
 
 import examView from '@views/examView';
+
+import AppError from '../errors/AppError';
 
 class ExamController {
   public async index(req: Request, res: Response): Promise<Response> {

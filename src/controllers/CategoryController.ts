@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import AppError from 'src/errors/AppError';
 import { getRepository } from 'typeorm';
 
 import Category from '@models/Category';
 
 import categoryView from '@views/categoryView';
+
+import AppError from '../errors/AppError';
 
 class CategoryController {
   public async index(req: Request, res: Response): Promise<Response> {

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { MulterError } from 'multer';
-import AppError from 'src/errors/AppError';
+
+import AppError from '../errors/AppError';
 
 function handleErrors(
   error: Error,

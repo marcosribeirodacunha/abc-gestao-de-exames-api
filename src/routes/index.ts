@@ -1,6 +1,6 @@
 import express from 'express';
-import ensureAuthenticated from 'src/middlewares/ensureAuthenticated';
 
+import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 import categoriesRouter from './categories.routes';
 import examsRouter from './exams.routes';
 import examTypes from './examTypes.routes';

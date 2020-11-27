@@ -1,12 +1,13 @@
 import { compare } from 'bcryptjs';
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import AppError from 'src/errors/AppError';
 import { getRepository } from 'typeorm';
 
 import authConfig from '@config/auth';
 
 import User from '@models/User';
+
+import AppError from '../errors/AppError';
 
 class SessionController {
   public async store(req: Request, res: Response): Promise<Response> {

@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
 import { isBoolean, mergeWith } from 'lodash';
-import AppError from 'src/errors/AppError';
-import deletePhoto from 'src/helpers/deletePhoto';
 import { getRepository } from 'typeorm';
 
 import User from '@models/User';
 
 import userView from '@views/userView';
+
+import AppError from '../errors/AppError';
+import deletePhoto from '../helpers/deletePhoto';
 
 class UserController {
   public async index(req: Request, res: Response): Promise<Response> {

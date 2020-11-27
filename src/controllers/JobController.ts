@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import AppError from 'src/errors/AppError';
 import { getRepository } from 'typeorm';
 
 import Job from '@models/Job';
 
 import jobView from '@views/jobView';
+
+import AppError from '../errors/AppError';
 
 class JobController {
   public async index(req: Request, res: Response): Promise<Response> {
