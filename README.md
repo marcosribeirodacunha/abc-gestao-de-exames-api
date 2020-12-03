@@ -3,7 +3,7 @@
   <img alt="Aurora Events" src="./github/logo.svg" width="200px" />
 </h1>
 
-<h4 align="center">API para a aplicação <a href=""https://github.com/marcosribeirodacunha/abc-gestao-de-exames>ABC Gestão de exames</a> onde é possível realizar o cadastro e controle de exames de uma empresa</h4>
+<h4 align="center">API para a aplicação <a href="https://github.com/marcosribeirodacunha/abc-gestao-de-exames">ABC Gestão de exames</a> onde é possível realizar o cadastro e controle de exames de uma empresa</h4>
 
 <p align="center">
   <img alt="Linguagem mais usada" src="https://img.shields.io/github/languages/top/marcosribeirodacunha/abc-gestao-de-exames-api?style=flat">
