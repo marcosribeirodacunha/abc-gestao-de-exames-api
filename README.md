@@ -22,12 +22,13 @@
 </p>
 
 <p align="center">
-  <a href="#-recursos">Recursos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-rotas">Rotas</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-instalacao">Instação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-configurando-as-variaveis-de ambiente">Configuração</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-executar-a-api">Executando a API</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-recursos">Recursos</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-rotas">Rotas</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-instalação">Instalação</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-configurando-as-variáveis-de-ambiente">Configuração</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-executando-a-api">Executando a API</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-insomnia">Insomnia</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;|&nbsp;&nbsp;
   <a href="#-licença">Licença</a>
 </p>
 
@@ -49,7 +50,7 @@
 - Upload de imagem do usuário para um diretório local **ou**;
 - Upload de imagem do usuário para o [IBM Cloud Object Storage](https://www.ibm.com/cloud/object-storage).
 
-## ↗ Rotas
+## ↖ Rotas
 
 - [x] CRUDs seguindo o seguinte modelo:
   - [x] `GET /`
@@ -127,7 +128,7 @@ Modifique a variável `STORAGE_TYPE` para **cos**. Em seguida modifique as segui
 
 Em caso de dúvidas para localizar os valores destas variáveis é possível encontrar informações detalhadas [aqui](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-node) e [aqui](https://cloud.ibm.com/docs/cloud-object-storage/iam?topic=cloud-object-storage-service-credentials).
 
-### ▶ Executando a API
+## ▶ Executando a API
 
 Após concluir os passos anteriores execute os seguintes comandos:
 
@@ -142,6 +143,12 @@ $ yarn typeorm migration:run
 $ yarn dev
 // ou npm run dev
 ```
+
+## 🟣 Insomnia
+
+Para testar a aplicação utilizando o [Insomnia](https://insomnia.rest/) clique no botão abaixo para criar um workspace com todas as rotas necessárias.
+
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fmarcosribeirodacunha%2Fabc-gestao-de-exames-api%2Fmaster%2Fgithub%2FInsomnia_workspace.json)
 
 ## 👨🏽‍💻 Tecnologias
 
